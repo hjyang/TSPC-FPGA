@@ -1,0 +1,2 @@
+SETPROJECT "D:/FPGA/TSPC/TSPC_v8/ipcore_dir/coregen.cgp"
+LAUNCHXCO "D:/FPGA/TSPC/TSPC_v8/ipcore_dir/rdataFifo.xco"

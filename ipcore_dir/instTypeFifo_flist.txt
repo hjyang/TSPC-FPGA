@@ -1,0 +1,16 @@
+# Output products list for <instTypeFifo>
+_xmsgs\pn_parser.xmsgs
+fifo_generator_readme.txt
+fifo_generator_ug175.pdf
+instTypeFifo.asy
+instTypeFifo.gise
+instTypeFifo.ngc
+instTypeFifo.sym
+instTypeFifo.v
+instTypeFifo.veo
+instTypeFifo.vhd
+instTypeFifo.vho
+instTypeFifo.xco
+instTypeFifo.xise
+instTypeFifo_flist.txt
+instTypeFifo_xmdf.tcl

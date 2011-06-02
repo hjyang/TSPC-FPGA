@@ -1,0 +1,16 @@
+# Output products list for <rdataFifo>
+_xmsgs\pn_parser.xmsgs
+fifo_generator_readme.txt
+fifo_generator_ug175.pdf
+rdataFifo.asy
+rdataFifo.gise
+rdataFifo.ngc
+rdataFifo.sym
+rdataFifo.v
+rdataFifo.veo
+rdataFifo.vhd
+rdataFifo.vho
+rdataFifo.xco
+rdataFifo.xise
+rdataFifo_flist.txt
+rdataFifo_xmdf.tcl
