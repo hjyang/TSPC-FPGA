@@ -29,9 +29,11 @@ FPGA¡@project on Trusted Storage
                   since they will be verified simultaneously.)
      
       (vi) load root: op_code(5) ( 8 bits ) + node_hash ( 160 bits )   
+           
            (Note: The root node is always at entry 0.)
     
      (vii) return HMAC value: op_code(6)(8bits)+ entry(16bits) + section key(128bits)+ nonce(128bits)
+           
            (Note: HMAC format: h( section key(128bits) || 
                                         nonce(128bits) || 
                                        node_id(24bits) || 
