@@ -36,7 +36,7 @@ FPGA¡@project on Trusted Storage
            
            (Note: HMAC format: h( section key(128bits) || 
                                         nonce(128bits) || 
-                                       node_id(24bits) || 
+                                      node_id( 24bits) || 
                                    hash_value(160bits) )
 
     (viii) update1: op_code(7) (8 bits) + command_length(8 bits) 
