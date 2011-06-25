@@ -26,7 +26,7 @@ FPGA project on Trusted Storage
      (iii) Middle Frame:  op_code(8'hbb) + { msg 1 chunk data (512 bits) 
                                            + msg 2 chunk data (512 bits) 
                                            + msg 3 chunk data (512 bits) 
-                                           + msg 4 chunk data (512 bits) } x5                                           
+                                           + msg 4 chunk data (512 bits) } x5
        
        Merkle Tree Testing:
    
