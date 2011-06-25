@@ -9,54 +9,71 @@ FPGA project on Trusted Storage
 3. Testing Protocol:
    
    (1) Gigabit Ethernet required
-   (2) 6-bit (64) cache for testing
+   (2) 6-bit (64) cache for testing Merkle tree implementation
    (3) FPGA MAC address: 48'h001122334455
    (4) Data(Instruction) Format: ( MSB -> LSB )
-        
-       (i) load node: op_code(0) (8 bits) + current entry ( 16 bits ) 
-                                          + parent entry ( 16 bits )  
-                                          + node_id (24 bits) + node_hash (160 bits) 
+   
+       Data Block Hash Engine Testing:
+       
+       (i) Initial Frame: op_code(8'haa) + { msg 1 chunk data (512 bits) 
+                                           + msg 2 chunk data (512 bits) 
+                                           + msg 3 chunk data (512 bits) 
+                                           + msg 4 chunk data (512 bits) } x5
+      (ii) Final Frame:   op_code(8'hcc) + { msg 1 chunk data (512 bits) 
+                                           + msg 2 chunk data (512 bits) 
+                                           + msg 3 chunk data (512 bits) 
+                                           + msg 4 chunk data (512 bits) } x5 
+     (iii) Middle Frame:  op_code(8'hbb) + { msg 1 chunk data (512 bits) 
+                                           + msg 2 chunk data (512 bits) 
+                                           + msg 3 chunk data (512 bits) 
+                                           + msg 4 chunk data (512 bits) } x5                                           
+       
+       Merkle Tree Testing:
+   
+       (i) load node: op_code(8'h00) + current entry ( 16 bits ) 
+                                     + parent entry ( 16 bits )  
+                                     + node_id (24 bits) + node_hash (160 bits) 
 
-      (ii) verify 1 pair : op_code(1) (8 bits) + right_child_entry ( 16 bits ) 
-                                               + left _child_entry ( 16 bits ) 
-                                               + parent entry ( 16 bits )
+      (ii) verify 1 pair : op_code(8'h01) + right_child_entry ( 16 bits ) 
+                                          + left _child_entry ( 16 bits ) 
+                                          + parent entry ( 16 bits )
 
-   (iii~v) verify 2~4 pair : op_code(2-4) (8 bits) + { right_child_entry ( 16 bits ) 
-                                                     + left _child_entry ( 16 bits ) 
-                                                     + parent entry ( 16 bits ) } x 2~4
+   (iii~v) verify 2~4 pair : op_code(8'h02-8'h04) + { right_child_entry ( 16 bits ) 
+                                                  + left _child_entry ( 16 bits ) 
+                                                  + parent entry ( 16 bits ) } x 2~4
 
            (Note: Different entry sets should not have dependencies, 
                   since they will be verified simultaneously.)
      
-      (vi) load root: op_code(5) ( 8 bits ) + node_hash ( 160 bits )   
+      (vi) load root: op_code(8'h05) + node_hash ( 160 bits )   
            
            (Note: The root node is always at entry 0.)
     
-     (vii) return HMAC value: op_code(6)(8bits)+ entry(16bits) + section key(128bits)+ nonce(128bits)
+     (vii) return HMAC value: op_code(8'h06)+ entry(16bits) + section key(128bits)+ nonce(128bits)
            
            (Note: HMAC format: h( section key(128bits) || 
                                         nonce(128bits) || 
                                       node_id( 24bits) || 
                                    hash_value(160bits) )
 
-    (viii) update1: op_code(7) (8 bits) + command_length(8 bits) 
+    (viii) update1: op_code(8'h07) + command_length(8 bits) 
                                         + current_entry(24 bits) 
                                         + neighbor_entry(16 bits) 
                                         + parent_entry(16 bits) 
                                         + hash(160 bits) 
                                         + { neighbor_entry(16 bits) + parent_entry(16 bits) } x n
 
-    (ix~x) update2~4 : op_code(8-10) (8 bits) + command_length(8 bits) 
-                                              + { current_entry(24 bits) 
-                                                + neighbor_entry(16 bits) 
-                                                + parent_entry(16 bits) 
-                                                + hash(160 bits) } 
-                                              + { current_entry(32 bits) 
-                                                + neighbor_entry(16 bits) 
-                                                + parent_entry(16 bits) 
-                                                + hash(160 bits) } x 1~3 
-                                              + {  { neighbor_entry(16 bits) 
-                                                   + parent_entry(16 bits) } x 2~4 } x n
+    (ix~x) update2~4 : op_code(8'h08-8'h0a) + command_length(8 bits) 
+                                            + { current_entry(24 bits) 
+                                              + neighbor_entry(16 bits) 
+                                              + parent_entry(16 bits) 
+                                              + hash(160 bits) } 
+                                            + { current_entry(32 bits) 
+                                              + neighbor_entry(16 bits) 
+                                              + parent_entry(16 bits) 
+                                              + hash(160 bits) } x 1~3 
+                                            + {  { neighbor_entry(16 bits) 
+                                                 + parent_entry(16 bits) } x 2~4 } x n
 
           ( Note: (a) The "command_length" is the length of the update command in 32-bit unit.
                       When calculating the length, op_code is not included.            
